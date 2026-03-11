@@ -1,9 +1,8 @@
 # SecureAPI
 
-![Python](https://img.shields.io/badge/Python-3.12+-blue)
-![Framework](https://img.shields.io/badge/Framework-Flask-green)
-![API](https://img.shields.io/badge/API-Secure-red)
-![License](https://img.shields.io/badge/License-Educational-lightgrey)
+![Python](https://img.shields.io/badge/Python-3.12+-blue)(https://www.python.org/)
+![Framework](https://img.shields.io/badge/Framework-Flask-green)(https://flask.palletsprojects.com/)
+![API](https://img.shields.io/badge/API-Secure-red)(https://github.com/QuantumDevPro/secure-flask-api-CYB350.git)
 
 A **secure Flask REST API** demonstrating modern API security techniques.
 
