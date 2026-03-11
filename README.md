@@ -42,7 +42,6 @@ Features:
 * In-memory storage (no external database)
 This project demonstrates **multiple authentication methods and secure API practices**.
 
----
 # Project Structure
 secureAPI/
 │
