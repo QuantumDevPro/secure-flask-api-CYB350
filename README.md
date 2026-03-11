@@ -42,7 +42,9 @@ Features:
 * In-memory storage (no external database)
 This project demonstrates **multiple authentication methods and secure API practices**.
 
-# Project Structure
+## Project Structure
+
+```
 secureAPI/
 │
 ├── app.py
@@ -55,7 +57,8 @@ secureAPI/
 │   ├── cert.pem
 │   └── key.pem
 │
-├── README.md
+└── README.md
+```
 
 
 # Requirements
