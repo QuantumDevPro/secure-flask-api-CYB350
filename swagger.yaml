@@ -1,0 +1,203 @@
+openapi: "2.0"
+info:
+  title: Items API
+  description: A simple inventory management API
+
+basePath: /
+consumes:
+  - application/json
+produces:
+  - application/json
+
+# ---------------------------------------------------------------------------
+# Security Definitions — declare all supported auth schemes here
+# ---------------------------------------------------------------------------
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    in: header
+    name: X-API-Key
+    description: >
+      All requests must include an `X-API-Key` header.
+      Example: `X-API-Key: my-secret-key`
+
+# ---------------------------------------------------------------------------
+# Global Security — applies ApiKeyAuth to every endpoint by default.
+# To make a specific route public, override it with `security: []` on that route.
+# ---------------------------------------------------------------------------
+security:
+  - ApiKeyAuth: []
+
+definitions:
+  Item:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: sword
+      quantity:
+        type: integer
+        example: 3
+
+  ItemInput:
+    type: object
+    required:
+      - name
+      - quantity
+    properties:
+      name:
+        type: string
+        example: sword
+      quantity:
+        type: integer
+        minimum: 0
+        example: 3
+
+  ItemsResponse:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: "#/definitions/Item"
+      total:
+        type: integer
+        example: 2
+
+  ErrorResponse:
+    type: object
+    properties:
+      error:
+        type: string
+        example: Item with id 1 not found
+
+  SuccessResponse:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Item 1 deleted successfully
+
+paths:
+  /:
+    get:
+      summary: Health check
+      description: Returns the API status. This endpoint is public — no authentication required.
+      operationId: healthCheck
+      security: []
+      responses:
+        200:
+          description: API is running
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Secure API is running!
+              status:
+                type: string
+                example: ok
+
+  /items:
+    get:
+      summary: Get all items
+      description: Returns a list of all items in the inventory.
+      operationId: getItems
+      responses:
+        200:
+          description: A list of items
+          schema:
+            $ref: "#/definitions/ItemsResponse"
+
+    post:
+      summary: Create a new item
+      description: Adds a new item to the inventory.
+      operationId: createItem
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/ItemInput"
+      responses:
+        201:
+          description: Item created successfully
+          schema:
+            $ref: "#/definitions/Item"
+        400:
+          description: Validation error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /items/{item_id}:
+    get:
+      summary: Get a single item
+      description: Returns a single item by its ID.
+      operationId: getItem
+      parameters:
+        - in: path
+          name: item_id
+          required: true
+          type: integer
+          description: The ID of the item to retrieve
+      responses:
+        200:
+          description: The requested item
+          schema:
+            $ref: "#/definitions/Item"
+        404:
+          description: Item not found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    put:
+      summary: Update an item
+      description: Updates one or more fields of an existing item.
+      operationId: updateItem
+      parameters:
+        - in: path
+          name: item_id
+          required: true
+          type: integer
+          description: The ID of the item to update
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/ItemInput"
+      responses:
+        200:
+          description: Item updated successfully
+          schema:
+            $ref: "#/definitions/Item"
+        400:
+          description: Validation error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: Item not found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    delete:
+      summary: Delete an item
+      description: Permanently removes an item from the inventory.
+      operationId: deleteItem
+      parameters:
+        - in: path
+          name: item_id
+          required: true
+          type: integer
+          description: The ID of the item to delete
+      responses:
+        200:
+          description: Item deleted successfully
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        404:
+          description: Item not found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
