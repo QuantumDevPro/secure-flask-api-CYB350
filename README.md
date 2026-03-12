@@ -82,25 +82,47 @@ You can either **download the project archive** or **clone the repository from G
 ### Option 2: Clone the Repository
 
 ```powershell
-git clone https://github.com/YOUR_USERNAME/secureAPI.git
+git clone https://github.com/QuantumDevPro/secure-flask-api-CYB350
 cd secureAPI
 ````
-
+--- 
 # Install Dependencies
 
+Before installing the project dependencies, create and activate a Python virtual environment.
+
+### 1. Create a virtual environment
+
 From the project root directory:
+
+```powershell
+python -m venv venv
+```
+
+### 2. Activate the virtual environment
+
+On Windows PowerShell:
+
+```powershell
+.\venv\Scripts\Activate
+```
+
+After activation, your terminal prompt should show `(venv)`.
+
+### 3. Install project dependencies
+
+With the virtual environment activated, install the required packages:
 
 ```powershell
 pip install -r requirements.txt
 ```
 
-This installs:
+This installs the required libraries:
 
 * Flask
 * Flasgger
 * Authlib
+* Flask-Limiter
 * requests
-* key_manager
 
 ---
 
@@ -144,7 +166,7 @@ Before testing endpoints:
 2. Enter the API key:
 
 ```
-secret_key_key
+secret_key
 ```
 
 This authorizes your browser to access protected endpoints.
@@ -176,7 +198,7 @@ Protected endpoints require an API key.
 Required header:
 
 ```
-X-API-Key: secret_key_key
+X-API-Key: secret_key
 ```
 
 Routes **excluded from API key validation**:
@@ -279,6 +301,7 @@ Expected response:
 
 If the token is **missing, invalid, or expired**, the API will deny access to the endpoint.
 
+---
 # API Endpoints
 
 | Method | Endpoint      | Description        |
@@ -317,7 +340,7 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 ```
 
----
+
 
 ## Health Check
 
@@ -334,40 +357,40 @@ Expected:
 }
 ```
 
----
+
 
 ## Create Item
 
 ```powershell
 Invoke-RestMethod -Uri https://127.0.0.1:5000/items `
   -Method POST `
-  -Headers @{ "X-API-Key"="_api_keyoury" } `
+  -Headers @{ "X-API-Key"="secret_key" } `
   -ContentType "application/json" `
   -Body '{"name":"sword","quantity":5}'
 ```
 
----
+
 
 ## Get All Items
 
 ```powershell
 Invoke-RestMethod https://127.0.0.1:5000/items `
-  -Headers @{ "X-API-Key"="secret_key_key" }
+  -Headers @{ "X-API-Key"="secret_key" }
 ```
 
----
+
 
 ## Update Item
 
 ```powershell
 Invoke-RestMethod -Uri https://127.0.0.1:5000/items/1 `
   -Method PUT `
-  -Headers @{ "X-API-Key"="secret_key_key" } `
+  -Headers @{ "X-API-Key"="secret_key" } `
   -ContentType "application/json" `
   -Body '{"quantity":99}'
 ```
 
----
+
 
 ## Delete Item
 
@@ -427,11 +450,8 @@ cert/key.pem
 
 These certificates enable **HTTPS for local development**.
 
----
 
 **Important security note**
 
 The OAuth `client_secret` should never be committed in production environments.
-It is included here only for **educational purposes**.
-
-```
+It is included here only for **educational purposes**, and it was deleted from the account already.
