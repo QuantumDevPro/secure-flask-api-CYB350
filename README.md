@@ -144,7 +144,7 @@ Before testing endpoints:
 2. Enter the API key:
 
 ```
-secret_key
+secret_key_key
 ```
 
 This authorizes your browser to access protected endpoints.
@@ -176,7 +176,7 @@ Protected endpoints require an API key.
 Required header:
 
 ```
-X-API-Key: secret_key
+X-API-Key: secret_key_key
 ```
 
 Routes **excluded from API key validation**:
@@ -352,7 +352,7 @@ Invoke-RestMethod -Uri https://127.0.0.1:5000/items `
 
 ```powershell
 Invoke-RestMethod https://127.0.0.1:5000/items `
-  -Headers @{ "X-API-Key"="secret_key" }
+  -Headers @{ "X-API-Key"="secret_key_key" }
 ```
 
 ---
@@ -362,7 +362,7 @@ Invoke-RestMethod https://127.0.0.1:5000/items `
 ```powershell
 Invoke-RestMethod -Uri https://127.0.0.1:5000/items/1 `
   -Method PUT `
-  -Headers @{ "X-API-Key"="secret_key" } `
+  -Headers @{ "X-API-Key"="secret_key_key" } `
   -ContentType "application/json" `
   -Body '{"quantity":99}'
 ```
@@ -374,7 +374,7 @@ Invoke-RestMethod -Uri https://127.0.0.1:5000/items/1 `
 ```powershell
 Invoke-RestMethod -Uri https://127.0.0.1:5000/items/1 `
   -Method DELETE `
-  -Headers @{ "X-API-Key"="secret_key" }
+  -Headers @{ "X-API-Key"="secret_key_key" }
 ```
 
 ---

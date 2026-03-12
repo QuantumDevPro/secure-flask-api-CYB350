@@ -43,8 +43,8 @@ oauth = OAuth(app)
 # GitHub OAuth configuration
 oauth.register(
     name='github',
-    client_id='Ov23liiGr6cjsljfiowaCmTv',
-    client_secret='1556ead939csjfnalkccb7f475bjaklfklnca23bf839e39',
+    client_id='Ov23liiGr6qDW3UjCmTv',
+    client_secret='1556ead939c5257ecb7f475b6e21ef23bf839e39',
     access_token_url='https://github.com/login/oauth/access_token',
     authorize_url='https://github.com/login/oauth/authorize',
     api_base_url='https://api.github.com/',
@@ -116,7 +116,7 @@ def require_api_key(f):
 
         key = request.headers.get("X-API-Key")
         if not key or key != get_api_key():
-            return jsonify({"error": "Unauthorized — invalid or missing API key"}), 401
+            return jsonify({"error": "Unauthorized. invalid or missing API key"}), 401
 
         return f(*args, **kwargs)
     return decorated
