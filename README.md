@@ -83,7 +83,7 @@ You can either **download the project archive** or **clone the repository from G
 
 ```powershell
 git clone https://github.com/QuantumDevPro/secure-flask-api-CYB350
-cd secureAPI
+cd secure-flask-api-CYB350
 ````
 --- 
 # Install Dependencies
@@ -252,10 +252,6 @@ The access token is stored in the Flask session.
 
 ---
 
-Below is the **exact section you can add to your README under “Authentication Methods”**.
-It matches **your screenshot commands and output exactly** and keeps the same documentation style as the rest of your README.
-
----
 ## JWT Authentication
 
 The API also supports **JSON Web Token (JWT) authentication** for accessing protected endpoints.
@@ -279,8 +275,6 @@ Extract the token:
 ```powershell
 $token = $r.access_token
 ```
-
----
 
 ### Step 2: Access a Protected Endpoint
 
