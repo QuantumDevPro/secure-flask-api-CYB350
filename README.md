@@ -213,31 +213,82 @@ Routes **excluded from API key validation**:
 
 ---
 
-## GitHub OAuth2 Authentication
+## GitHub OAuth Application Setup
 
-The API supports login through **GitHub OAuth2**.
+To enable GitHub OAuth authentication, you must create a GitHub OAuth application and obtain a **Client ID** and **Client Secret**.
 
-### Step 1: Login
+### Step 1: Create a GitHub Account
 
-Open:
+If you do not already have one, create a GitHub account:
+
+```
+https://github.com/signup
+```
+
+---
+
+### Step 2: Create an OAuth Application
+
+1. Open GitHub Developer Settings:
+
+```
+https://github.com/settings/developers
+```
+
+2. Select **OAuth Apps**.
+
+3. Click **New OAuth App**.
+
+Fill in the application details:
+
+| Field                      | Value                                                                |
+| -------------------------- | -------------------------------------------------------------------- |
+| Application name           | SecureAPI Lab                                                        |
+| Homepage URL               | [https://127.0.0.1:5000](https://127.0.0.1:5000)                     |
+| Authorization callback URL | [https://127.0.0.1:5000/authorize](https://127.0.0.1:5000/authorize) |
+
+After creating the application, GitHub will provide:
+
+```
+Client ID
+Client Secret
+```
+
+---
+
+### Step 3: Configure the Application
+
+Open `app.py` and replace the placeholder values with your credentials:
+
+```python
+oauth.register(
+    name='github',
+    client_id='YOUR_CLIENT_ID',
+    client_secret='YOUR_CLIENT_SECRET',
+    access_token_url='https://github.com/login/oauth/access_token',
+    authorize_url='https://github.com/login/oauth/authorize',
+    api_base_url='https://api.github.com/',
+    client_kwargs={
+        'scope': 'user:email'
+    }
+)
+```
+
+Save the file after updating the credentials.
+
+---
+
+### Step 4: Run the OAuth Login Flow
+
+Open the login endpoint in your browser:
 
 ```
 https://127.0.0.1:5000/login
 ```
 
-This redirects to GitHub authorization.
+You will be redirected to GitHub to authorize the application.
 
----
-
-### Step 2: Authorize Application
-
-GitHub will ask you to approve access.
-
-After authorization, GitHub redirects to:
-
-```
-/authorize
-```
+After approving access, GitHub will redirect back to the API and return a success response.
 
 Example response:
 
@@ -247,11 +298,7 @@ Example response:
   "message": "OAuth2 Authentication Successful"
 }
 ```
-
-The access token is stored in the Flask session.
-
 ---
-
 ## JWT Authentication
 
 The API also supports **JSON Web Token (JWT) authentication** for accessing protected endpoints.
